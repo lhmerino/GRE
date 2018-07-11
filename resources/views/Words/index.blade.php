@@ -28,6 +28,9 @@
                     {
                         echo '<td>'.implode(',', $result['synonyms']).PHP_EOL;
                     }
+                    else {
+                        echo '<td></td>';
+                    }
                     echo '</tr>'.PHP_EOL;
 
                     $i++;
