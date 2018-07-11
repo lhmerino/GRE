@@ -37,8 +37,16 @@ class WordsController extends Controller
      */
     public function store(Request $request)
     {
+        // Get the word from the request
         $word = $request->input('word');
 
+        $count = Word::where('word', $word)->count();
+
+        // Word already exists
+        if($count > 0) return redirect()->route('words.index');
+
+
+        // Make the API request
         $response = \Unirest\Request::get("https://wordsapiv1.p.mashape.com/words/".$word,
             array(
                 "X-Mashape-Key" => getenv('X-Mashape-Key'),
@@ -51,7 +59,7 @@ class WordsController extends Controller
             'api_result' => $response->raw_body
         ));
 
-        return view('Words.index');
+        return redirect()->route('words.index');
     }
 
     /**
